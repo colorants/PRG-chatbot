@@ -37,7 +37,14 @@ async function sendMessage() {
         });
 
         const data = await res.json();
-        const botMessage = data.reply;
+        let botMessage = data.reply;
+
+        if (!botMessage) {
+            botMessage = "⚠️ Sorry, I couldn't generate a response.";
+        } else if (typeof botMessage !== "string") {
+            botMessage = JSON.stringify(botMessage, null, 2)
+        }
+
 
         const botDiv = document.createElement("div");
         botDiv.className = "bg-gray-600 p-2 rounded-md self-start";
